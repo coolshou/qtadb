@@ -93,10 +93,10 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext &context, con
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setOrganizationName("Bracia");
+    QCoreApplication::setOrganizationName("coolshou.idv");
     QCoreApplication::setApplicationName("QtADB");
-    QCoreApplication::setApplicationVersion("0.8.1");
-    QCoreApplication::setOrganizationDomain("http://qtadb.com");
+    QCoreApplication::setApplicationVersion("1.0.0");
+    QCoreApplication::setOrganizationDomain("https://github.com/coolshou/qtadb");
     Application a(argc, argv);
     qInstallMessageHandler(customMessageHandler);
     a.loadTranslations(":/lang");

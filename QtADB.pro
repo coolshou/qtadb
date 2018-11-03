@@ -15,8 +15,9 @@
 #
 #   @author Jakub Motyczko
 # -------------------------------------------------
-QT += network
+QT += network core widgets
 #QT += declarative
+QT += quick
 TARGET = QtADB
 
 TEMPLATE = app
@@ -105,24 +106,77 @@ FORMS += ./dialogs/mainwindow.ui \
     widgets/contactwidget.ui \
     dialogs/logcatdialog.ui \
     dialogs/registerdialog.ui
-TRANSLATIONS = \
-	languages/qtadb_ar.ts \
-	languages/qtadb_de.ts \
-	languages/qtadb_en.ts \
-	languages/qtadb_hu.ts \
-	languages/qtadb_ja.ts \
-	languages/qtadb_pl.ts \
-	languages/qtadb_ru.ts \
-	languages/qtadb_sv.ts \
-	languages/qtadb_cs.ts \
-	languages/qtadb_el.ts \
-	languages/qtadb_es.ts \
-	languages/qtadb_it.ts \
-	languages/qtadb_nl.ts \
-	languages/qtadb_pt.ts \
-	languages/qtadb_sr.ts \
-	languages/qtadb_zh.ts \
-	languages/qtadb_zh_TW.ts
+
+LANGUAGES = en pl el es it nl cs de hu sv ja ar ru pt sr zh_CN zh_TW
+
+# parameters: var, prepend, append
+defineReplace(prependAll) {
+ for(a,$$1):result += $$2$${a}$$3
+ return($$result)
+}
+
+#TRANSLATIONS = $$prependAll(LANGUAGES, $$PWD/languages/qtadb_, .ts)
+TRANSLATIONS = $$prependAll(LANGUAGES, languages/qtadb_, .ts)
+
+TRANSLATIONS_FILES =
+
+qtPrepareTool(LRELEASE, lrelease)
+for(tsfile, TRANSLATIONS) {
+ #qmfile = $$shadowed($$tsfile)
+ qmfile = $$relative_path($$tsfile)
+ qmfile ~= s,.ts$,.qm,
+ qmdir = $$dirname(qmfile)
+ !exists($$qmdir) {
+    mkpath($$qmdir)|error("Aborting.")
+ }
+ command = $$LRELEASE -removeidentical $$tsfile -qm $$qmfile
+ system($$command)|error("Failed to run: $$command")
+ TRANSLATIONS_FILES += $$qmfile
+}
+
+## automate the process for creating TS files
+#wd = $$replace(PWD, /, $$QMAKE_DIR_SEP)
+#
+#qtPrepareTool(LUPDATE, lupdate)
+#LUPDATE += -locations relative -no-ui-lines
+#TSFILES = $$files($$PWD/languages/qtadb_''''.ts) $$PWD/languages/qtadb_untranslated.ts
+#for(file, TSFILES) {
+# lang = $$replace(file, .''''_([^/]*).ts, 1)
+# v = ts-$${lang}.commands
+# $$v = cd $$wd && $$LUPDATE $$SOURCES $$APP_FILES -ts $$file
+# QMAKE_EXTRA_TARGETS += ts-$$lang
+#}
+#ts-all.commands = cd $$PWD && $$LUPDATE $$SOURCES $$APP_FILES -ts $$TSFILES
+#QMAKE_EXTRA_TARGETS += ts-all
+
+#
+#qtPrepareTool(LCONVERT, lconvert)
+#LCONVERT += -locations none
+#isEqual(QMAKE_DIR_SEP, /) {
+# commit-ts.commands =  cd $$wd;  git add -N languages/*''.ts &&  for f in `git diff-files —name-only languages/*''.ts`; do  $$LCONVERT -i f -o f;  done;  git add languages/*_.ts && git commit
+#} else {
+# commit-ts.commands =  cd $$wd &&  git add -N languages/*''.ts &&  for /f usebackq %%f in (`git diff-files —name-only — languages/*''.ts`) do  $$LCONVERT -i %f -o%f $$escape_expand(nt)  cd $$wd && git add languages/*_.ts && git commit
+#}
+#QMAKE_EXTRA_TARGETS += commit-ts
+
+#TRANSLATIONS = \
+#	languages/qtadb_ar.ts \
+#	languages/qtadb_de.ts \
+#	languages/qtadb_en.ts \
+#	languages/qtadb_hu.ts \
+#	languages/qtadb_ja.ts \
+#	languages/qtadb_pl.ts \
+#	languages/qtadb_ru.ts \
+#	languages/qtadb_sv.ts \
+#	languages/qtadb_cs.ts \
+#	languages/qtadb_el.ts \
+#	languages/qtadb_es.ts \
+#	languages/qtadb_it.ts \
+#	languages/qtadb_nl.ts \
+#	languages/qtadb_pt.ts \
+#	languages/qtadb_sr.ts \
+#	languages/qtadb_zh.ts \
+#	languages/qtadb_zh_TW.ts
 
 RC_FILE = ikonka.rc
 RESOURCES += zasoby.qrc

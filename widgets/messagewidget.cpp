@@ -53,7 +53,8 @@ MessageWidget::MessageWidget(QWidget *parent, QString clientIP) :
 
     this->messageCount=0;
 
-    this->qmlView =  new QDeclarativeView;
+    //this->qmlView =  new QDeclarativeView;
+    this->qmlView =  new QQuickView;
     this->qmlViewCtx = this->qmlView->rootContext();
     if (QFile::exists("qml/messageView.qml"))
         this->qmlView->setSource(QUrl::fromLocalFile("qml/messageView.qml"));
@@ -65,11 +66,16 @@ MessageWidget::MessageWidget(QWidget *parent, QString clientIP) :
     this->qmlViewCtx->setContextProperty("messageModel", &sortModel);
     this->qmlViewCtx->setContextProperty("myNickname", "Me");
     this->qmlViewCtx->setContextProperty("contactDefault", "qrc:/icons/contactDefault.png");
-    qmlView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
+    //qmlView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
+    qmlView->setResizeMode(QQuickView::SizeRootObjectToView);
 
     this->qmlViewCtx->setContextProperty("messageWidget", this);
+    // Add the QML view to my widget layout (centralVBoxLayout),
+    // which I added in Qt Designer
+    QWidget* quickWidget = QWidget::createWindowContainer(this->qmlView);
 
-    ui->layoutMessages->addWidget(this->qmlView,1,1);
+    //ui->layoutMessages->addWidget(this->qmlView,1,1);
+    ui->layoutMessages->addWidget(quickWidget,1,1);
 
     //QSettings settings;
     //this->sdk = settings.value("sdkPath").toString();

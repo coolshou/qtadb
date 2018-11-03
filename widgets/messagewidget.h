@@ -21,10 +21,13 @@
 #ifndef MESSAGEWIDGET_H
 #define MESSAGEWIDGET_H
 
-#include <QtGui>
+//#include <QtGui>
+#include <QtWidgets>
 #include <QtNetwork>
-#include <QDeclarativeView>
-#include <QDeclarativeContext>
+#include <QQuickView>
+#include <QQmlContext>
+//#include <QDeclarativeView>
+//#include <QDeclarativeContext>
 
 #include "../classes/models/messagethreadmodel.h"
 #include "../classes/models/contactmodel.h"
@@ -49,9 +52,10 @@ protected:
 
 private:
     Ui::MessageWidget *ui;
-    QDeclarativeView *qmlView;
-    QDeclarativeContext *qmlViewCtx;
-
+    QQuickView *qmlView;
+    QQmlContext *qmlViewCtx;
+    //QDeclarativeView *qmlView;
+    //QDeclarativeContext *qmlViewCtx;
     MessageModel messageModel;
     MessageThreadModel messageThreadModel;
     ContactModel contactModel;

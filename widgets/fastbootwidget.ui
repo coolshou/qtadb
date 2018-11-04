@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
+    <width>731</width>
     <height>343</height>
    </rect>
   </property>
@@ -18,12 +18,42 @@
     <rect>
      <x>20</x>
      <y>0</y>
-     <width>371</width>
+     <width>565</width>
      <height>321</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="layoutFastboot">
-    <item row="0" column="0">
+    <item row="0" column="4">
+     <widget class="QPushButton" name="buttonBootIMG">
+      <property name="focusPolicy">
+       <enum>Qt::ClickFocus</enum>
+      </property>
+      <property name="text">
+       <string>Boot IMG</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="buttonFlashRecovery">
+      <property name="focusPolicy">
+       <enum>Qt::ClickFocus</enum>
+      </property>
+      <property name="text">
+       <string>Flash recovery</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QPushButton" name="buttonFlashRadio">
+      <property name="focusPolicy">
+       <enum>Qt::ClickFocus</enum>
+      </property>
+      <property name="text">
+       <string>Flash radio</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
      <widget class="QPushButton" name="buttonFlashSPL">
       <property name="focusPolicy">
        <enum>Qt::ClickFocus</enum>
@@ -33,7 +63,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="2" column="1">
      <spacer name="verticalSpacer_4">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -46,33 +76,10 @@
       </property>
      </spacer>
     </item>
-    <item row="0" column="1">
-     <widget class="QPushButton" name="buttonFlashRecovery">
-      <property name="focusPolicy">
-       <enum>Qt::ClickFocus</enum>
-      </property>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="buttonFlashZip">
       <property name="text">
-       <string>Flash recovery</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <widget class="QPushButton" name="buttonFlashRadio">
-      <property name="focusPolicy">
-       <enum>Qt::ClickFocus</enum>
-      </property>
-      <property name="text">
-       <string>Flash radio</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="3">
-     <widget class="QPushButton" name="buttonBootIMG">
-      <property name="focusPolicy">
-       <enum>Qt::ClickFocus</enum>
-      </property>
-      <property name="text">
-       <string>Boot IMG</string>
+       <string>Flash Zip</string>
       </property>
      </widget>
     </item>

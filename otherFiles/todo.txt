@@ -1,0 +1,13 @@
+* Fix closing tabs on shell view - fixed
+* Test and fix non-negotiable tab positions in ShellWidget
+* Allow forcing of PS1 override in shell (for shits and giggles)
+* Fix pasting into shell.
+* Implement VNC in window
+* Implement side-loading QtADB on the messages screen.
+* Fix / implement better RECOVERY detection
+* Alert icon for shell alerts
+* Store the proxy password somewhere and don't try more than once with a stored password.
+* Add a "Hide Automatically" button to the GUI with a message that says "Hiding in x seconds"
+* Integrate ADB source code?
+* Auto scroll down with updates to the screen.
+* Mimimise to tray & display bubble to disable behaviour.

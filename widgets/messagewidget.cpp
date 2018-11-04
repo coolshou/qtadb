@@ -260,7 +260,7 @@ void MessageWidget::sendToClient(QString message)
     socket->connectToHost(this->clientIP,4444,QTcpSocket::ReadWrite);
     if (socket->waitForConnected(2000))
     {
-        socket->write(message.toLatin1());
+        socket->write(message.toUtf8());
         socket->waitForReadyRead(300);
         socket->disconnectFromHost();
     }
@@ -299,19 +299,19 @@ void MessageWidget::getContactList()
 
 void MessageWidget::markMessageAsRead(QString id)
 {
-    sendToClient("MARK_MESSAGE_AS_READ:"+id.toLatin1());
+    sendToClient("MARK_MESSAGE_AS_READ:"+id.toUtf8());
 }
 
 void MessageWidget::markThreadAsRead(QString id)
 {
-    sendToClient("MARK_THREAD_AS_READ:"+id.toLatin1());
+    sendToClient("MARK_THREAD_AS_READ:"+id.toUtf8());
     this->messageThreadModel.markAsRead(id);
     this->messageModel.markThreadAsRead(id);
 }
 
 void MessageWidget::insertSmsToDatabase(QString number, QString body, QString timestamp, QString type)
 {
-    sendToClient("INSERT_SMS:"+number.toLatin1()+":"+body.toLatin1()+":"+timestamp.toLatin1()+":"+type.toLatin1());
+    sendToClient("INSERT_SMS:"+number.toUtf8()+":"+body.toUtf8()+":"+timestamp.toUtf8()+":"+type.toUtf8());
 }
 
 void MessageWidget::sendSmsThread(QString message)
@@ -322,7 +322,7 @@ void MessageWidget::sendSmsThread(QString message)
 
     if (number == "")
         return;
-    sendToClient("SEND_SMS:"+number.toLatin1()+":"+message.toLatin1());
+    sendToClient("SEND_SMS:"+number.toUtf8()+":"+message.toUtf8());
 
     addSMS(thread.getId(), "1",QString::number(QDateTime::currentMSecsSinceEpoch()),number,"1","outbox",message);
 }
@@ -334,7 +334,7 @@ void MessageWidget::sendSms(QString number,QString message)
         number.chop(1);
         number = number.mid(number.indexOf("(")+1,number.length());
     }
-    sendToClient("SEND_SMS:"+number.toLatin1()+":"+message.toLatin1());
+    sendToClient("SEND_SMS:"+number.toUtf8()+":"+message.toUtf8());
 
     //addSMS(, "1",QString::number(QDateTime::currentMSecsSinceEpoch()),number,"1","outbox",message);
 }
@@ -345,7 +345,7 @@ void MessageWidget::filterMessages(QString filter)
     //pattern = /*".*"+*/filter/*+".*"*/;
     //QRegExp regExp(pattern, Qt::CaseInsensitive, QRegExp::FixedString);
     //this->sortModel.setFilterRegExp(regExp);
-    //qDebug()<<"filterMessages: "+filter.toLatin1();
+    //qDebug()<<"filterMessages: "+filter.toUtf8();
     //this->sortModel.setFilterFixedString(filter);
     this->sortModel.setFilterRegExp(QRegExp("^"+filter+"$"));
 }

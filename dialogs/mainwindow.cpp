@@ -235,8 +235,8 @@ void MainWindow::changeEvent(QEvent *e)
             this->logcatDialog->retranslateUi(this->logcatDialog);
         for (int i=0; i < this->akcje.size(); i++)
         {
-            akcje.at(i).actionMenu->setText(tr(akcje.at(i).text.toLatin1()));
-            akcje.at(i).button->setText(tr(akcje.at(i).text.toLatin1()));
+            akcje.at(i).actionMenu->setText(tr(akcje.at(i).text.toUtf8()));
+            akcje.at(i).button->setText(tr(akcje.at(i).text.toUtf8()));
         }
         break;
     default:
@@ -660,7 +660,7 @@ bool MainWindow::verifyKey(QString email,QString key)
     QCryptographicHash md5(QCryptographicHash::Md5);
     QCryptographicHash sha1(QCryptographicHash::Sha1);
 
-    md5.addData(email.toLatin1());
+    md5.addData(email.toUtf8());
     sha1.addData(md5.result());
 
     QString tmp = sha1.result().toHex();

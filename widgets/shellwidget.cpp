@@ -75,7 +75,7 @@ void ShellWidget::keyPressEvent(QKeyEvent *e)
     {
         if (e->key() == Qt::Key_C)
         {
-            this->process.write(QString(QChar(0x3)).toLatin1());
+            this->process.write(QString(QChar(0x3)).toUtf8());
         }
         else if (e->key() == Qt::Key_Left)
         {
@@ -223,7 +223,7 @@ void ShellWidget::keyPressEvent(QKeyEvent *e)
     }
     else if(e->key() == Qt::Key_Escape)
     {
-        this->process.write(QString(QChar(0x3)).toLatin1());
+        this->process.write(QString(QChar(0x3)).toUtf8());
     }
     else if (e->text().length()>0)
     {
@@ -256,7 +256,7 @@ void ShellWidget::executeCommand(QString command)
     }
     else
     {
-        this->process.write(command.toLatin1()+"\n");
+        this->process.write(command.toUtf8()+"\n");
     }
     this->commandHistory.prepend(command);
 }
@@ -407,7 +407,7 @@ void ShellWidget::keyPressEvent(QKeyEvent *e)
 {
     if(ui->editShell->hasFocus() && e->key() == Qt::Key_Escape)
     {
-        this->procesShell->write(QString(QChar(0x3)).toLatin1());
+        this->procesShell->write(QString(QChar(0x3)).toUtf8());
     }
     if(ui->editShell->hasFocus() && e->key() == Qt::Key_Down)
     {

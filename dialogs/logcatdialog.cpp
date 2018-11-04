@@ -285,7 +285,7 @@ void LogcatDialog::exportSelectedToFile()
         return;
     if (file.open(QFile::WriteOnly))
     {
-        file.write(output.toLatin1());
+        file.write(output.toUtf8());
         file.close();
     }
 }

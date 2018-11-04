@@ -92,7 +92,7 @@
 //    proces->start("\""+sdk+"\""+"adb shell sqlite3");
 //    proces->waitForReadyRead(-1);
 //    tmp=proces->readLine();
-//    proces->write(QString(QChar(0x3)).toLatin1());
+//    proces->write(QString(QChar(0x3)).toUtf8());
 //    proces->close();
 
 //    if (tmp.contains("not found"))

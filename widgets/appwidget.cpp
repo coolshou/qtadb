@@ -135,17 +135,17 @@ void AppWidget::changeEvent(QEvent *e)
         if (this->appMenu != NULL)
         {
             foreach(QAction *action, this->appMenu->actions())
-                action->setText(tr(action->data().toString().toLatin1()));
+                action->setText(tr(action->data().toString().toUtf8()));
         }
         if (this->backupMenu != NULL)
         {
             foreach(QAction *action, this->backupMenu->actions())
-                action->setText(tr(action->data().toString().toLatin1()));
+                action->setText(tr(action->data().toString().toUtf8()));
         }
         foreach(QAction *action, this->ui->toolButtonBackup->menu()->actions())
-            action->setText(tr(action->data().toString().toLatin1()));
+            action->setText(tr(action->data().toString().toUtf8()));
         foreach(QAction *action, this->ui->toolButtonRestore->menu()->actions())
-            action->setText(tr(action->data().toString().toLatin1()));
+            action->setText(tr(action->data().toString().toUtf8()));
 
         break;
     default:
@@ -1033,7 +1033,7 @@ void ThreadBackups::run()
             {
                 tmp.remove("app.name=");
                 tmp.remove(QRegExp("\\s+$"));
-                backupFound.appName = QString::fromUtf8(tmp.toLatin1());
+                backupFound.appName = QString::fromUtf8(tmp.toUtf8());
             }
             else if (tmp.contains("app.size"))
             {
@@ -1295,7 +1295,7 @@ void ThreadApps::run()
             (settings.value("apps/" + app.packageName + "/date", "").toString() != app.date))
         {
             qDebug()<<"Apps needs to pull apk";
-            zip.start("\""+sdk+"\""+"adb pull "+app.appFile.toLatin1()+" \""+QDir::currentPath()+"/tmp/\""+app.appFileName);
+            zip.start("\""+sdk+"\""+"adb pull "+app.appFile.toUtf8()+" \""+QDir::currentPath()+"/tmp/\""+app.appFileName);
             zip.waitForFinished(-1);
             temp = zip.readAll();
             qDebug()<<"Apps copy - "<<temp;
@@ -1316,7 +1316,7 @@ void ThreadApps::run()
                 {
                     if (aaptLineParts.first().contains(QRegExp("name=")) && app.packageName.isEmpty())
                     {
-                        app.packageName=QString::fromUtf8(aaptLineParts.first().toLatin1());
+                        app.packageName=QString::fromUtf8(aaptLineParts.first().toUtf8());
                         app.packageName.remove(0,app.packageName.indexOf("name=")+5);
                         app.packageName.remove("'");
                     }
@@ -1328,7 +1328,7 @@ void ThreadApps::run()
                     }
                     else if (aaptLineParts.first().contains(QRegExp("label="))&&app.appName.isEmpty())
                     {
-                        app.appName=QString::fromUtf8(aaptLineParts.first().toLatin1());
+                        app.appName=QString::fromUtf8(aaptLineParts.first().toUtf8());
                         app.appName.remove(0,app.appName.indexOf("label=")+6);
                         app.appName.remove("'");
                     }
@@ -1344,7 +1344,7 @@ void ThreadApps::run()
             }
             qDebug()<<"Apps aapt decoded";
             settings.setValue("apps/"+app.packageName+"/icoName", app.icoName);
-            settings.setValue("apps/"+app.packageName+"/appName", QString::fromUtf8(app.appName.toLatin1()));
+            settings.setValue("apps/"+app.packageName+"/appName", QString::fromUtf8(app.appName.toUtf8()));
             settings.setValue("apps/"+app.packageName+"/version", app.appVersion);
             settings.setValue("apps/"+app.packageName+"/size", app.appSize);
             settings.setValue("apps/"+app.packageName+"/date", app.date);
@@ -1377,7 +1377,7 @@ void ThreadApps::run()
             qDebug()<<"Apps there is missing icon i settings";
             if (!fileTmpList.contains(app.appFileName))
             {
-                zip.start("\""+sdk+"\""+"adb pull "+app.appFile.toLatin1()+" \""+QDir::currentPath()+"/tmp/\""+app.appFileName);
+                zip.start("\""+sdk+"\""+"adb pull "+app.appFile.toUtf8()+" \""+QDir::currentPath()+"/tmp/\""+app.appFileName);
                 zip.waitForFinished(-1);
                 QString out;
                 out = zip.readAll();
@@ -1509,7 +1509,7 @@ App * AppWidget::getAppInfo(QString filePath)
             }
             else if (aaptLineParts.first().contains(QRegExp("label="))&&app->appName.isEmpty())
             {
-                app->appName=QString::fromUtf8(aaptLineParts.first().toLatin1());
+                app->appName=QString::fromUtf8(aaptLineParts.first().toUtf8());
                 app->appName.remove(0,app->appName.indexOf("label=")+6);
                 app->appName.remove("'");
             }
@@ -1527,7 +1527,7 @@ App * AppWidget::getAppInfo(QString filePath)
     if (!settings.contains(app->packageName))
     {
         settings.setValue(app->packageName+"/icoName", app->icoName);
-        settings.setValue(app->packageName+"/appName", QString::fromUtf8(app->appName.toLatin1()));
+        settings.setValue(app->packageName+"/appName", QString::fromUtf8(app->appName.toUtf8()));
         settings.setValue(app->packageName+"/version", app->appVersion);
     }
 
@@ -1537,7 +1537,7 @@ App * AppWidget::getAppInfo(QString filePath)
     {
         unpack(app->appFile, QDir::currentPath()+"/icons/", app->icoName, temp);
 
-        QFile icon(QDir::currentPath()+"/icons/"+app->packageName.toLatin1()+".png");
+        QFile icon(QDir::currentPath()+"/icons/"+app->packageName.toUtf8()+".png");
         icon.open(QIODevice::ReadWrite);
         ba = icon.readAll();
         settings.setValue(app->packageName+"/icon", ba); //- zapisanie pixmap w QSettings

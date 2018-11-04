@@ -370,7 +370,7 @@ void FileWidget::changeEvent(QEvent *e)
                 QList<QAction *> actions = this->computerMenu->actions();
                 foreach(QAction *action, actions)
                 {
-                    action->setText(tr(action->data().toString().toLatin1()));
+                    action->setText(tr(action->data().toString().toUtf8()));
                 }
             }
             if (this->phoneLeftMenu != NULL)
@@ -378,7 +378,7 @@ void FileWidget::changeEvent(QEvent *e)
                 QList<QAction *> actions = this->phoneLeftMenu->actions();
                 foreach(QAction *action, actions)
                 {
-                    action->setText(tr(action->data().toString().toLatin1()));
+                    action->setText(tr(action->data().toString().toUtf8()));
                 }
             }
             if (this->phoneRightMenu != NULL)
@@ -386,7 +386,7 @@ void FileWidget::changeEvent(QEvent *e)
                 QList<QAction *> actions = this->phoneRightMenu->actions();
                 foreach(QAction *action, actions)
                 {
-                    action->setText(tr(action->data().toString().toLatin1()));
+                    action->setText(tr(action->data().toString().toUtf8()));
                 }
             }
         }
@@ -2000,7 +2000,7 @@ App * FileWidget::getAppInfo(QString filePath)
             }
             else if (aaptLineParts.first().contains(QRegExp("label="))&&app->appName.isEmpty())
             {
-                app->appName=QString::fromUtf8(aaptLineParts.first().toLatin1());
+                app->appName=QString::fromUtf8(aaptLineParts.first().toUtf8());
                 app->appName.remove(0,app->appName.indexOf("label=")+6);
                 app->appName.remove("'");
             }
@@ -2018,7 +2018,7 @@ App * FileWidget::getAppInfo(QString filePath)
     if (!settings.contains(app->packageName))
     {
         settings.setValue(app->packageName+"/icoName", app->icoName);
-        settings.setValue(app->packageName+"/appName", QString::fromUtf8(app->appName.toLatin1()));
+        settings.setValue(app->packageName+"/appName", QString::fromUtf8(app->appName.toUtf8()));
         settings.setValue(app->packageName+"/version", app->appVersion);
     }
 
@@ -2028,7 +2028,7 @@ App * FileWidget::getAppInfo(QString filePath)
     {
         unpack(app->appFile, QDir::currentPath()+"/icons/", app->icoName, temp);
 
-        QFile icon(QDir::currentPath()+"/icons/"+app->packageName.toLatin1()+".png");
+        QFile icon(QDir::currentPath()+"/icons/"+app->packageName.toUtf8()+".png");
         icon.open(QIODevice::ReadWrite);
         ba = icon.readAll();
         settings.setValue(app->packageName+"/icon", ba); //- zapisanie pixmap w QSettings

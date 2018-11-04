@@ -176,6 +176,10 @@ void AppWidget::copyAppToPC()
 
     if (this->dialog != NULL)
         delete this->dialog;
+    if (path.length() == 0) {
+        return;
+    }
+
     this->dialog = new dialogKopiuj(this, tmpList, this->sdk, dialogKopiuj::AppsToComputer, path);
     if (this->alwaysCloseCopy)
         this->dialog->closeAfterFinished();

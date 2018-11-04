@@ -360,7 +360,7 @@ void MessageWidget::filterContacts(QString filter)
 
 void MessageWidget::smsReceivedSlot(QString number, QString body)
 {
-
+    qDebug() << "smsReceivedSlot:" << number << ":" << body;
 }
 
 void MessageWidget::smsResult(QString result)

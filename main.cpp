@@ -37,6 +37,9 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext &context, con
 
    switch (type)
    {
+      case QtInfoMsg:
+         txt += QString("{Info} \t\t %1").arg(msg);
+         break;
       case QtDebugMsg:
          txt += QString("{Debug} \t\t %1").arg(msg);
          break;

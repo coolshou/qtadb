@@ -1595,6 +1595,7 @@ bool AppWidget::unpack(QString inFile,QString outPath,QString fileToUnpack,QStri
             break;
         fileArray.prepend(file->read(500));
     }
+    Q_UNUSED(arraySize);
     sigPos = fileArray.indexOf(signature);
     sigPos = file->size() - (fileArray.size() - sigPos);
     if (file->seek(sigPos))

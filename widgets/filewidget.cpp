@@ -83,6 +83,7 @@ bool FileWidget::unpack(QString inFile,QString outPath,QString fileToUnpack,QStr
             break;
         fileArray.prepend(file->read(500));
     }
+    Q_UNUSED(arraySize);
     sigPos = fileArray.indexOf(signature);
     sigPos = file->size() - (fileArray.size() - sigPos);
     if (file->seek(sigPos))
@@ -655,6 +656,8 @@ void FileWidget::computerDelete()
 
 void FileWidget::computerDisplay(QTableWidget *tableWidget)
 {
+    Q_UNUSED(tableWidget);
+
     QSettings settings;
     this->computerModel->clear();
     this->ui->leftLabelSelectedCount->setText(tr("getting files..."));
@@ -1504,11 +1507,11 @@ void FileWidget::phoneNewDir()
         QMessageBox::information(this,tr("error"),tr("dir was not created.\nMake sure that you are allowed to do this"),QMessageBox::Ok);
         return;
     }
-    if (rightTableView->hasFocus())
+    if (rightTableView->hasFocus()){
         this->rightDisplay();
-    else
+    } else {
         this->leftDisplay();
-
+    }
         int row = fileModel->getRow("new dir");
         QModelIndex index = fileModel->index(row, 1, QModelIndex());
         tableView->selectRow(sortModel->mapFromSource(index).row());
@@ -1580,6 +1583,8 @@ void FileWidget::phoneRename()
         connect (fileModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
                  this, SLOT(phoneRenameSlot(QModelIndex, QModelIndex)));
     }
+    Q_UNUSED(phoneTmp);
+    Q_UNUSED(sortModel);
 }
 
 void FileWidget::phoneRenameSlot(QModelIndex indexS, QModelIndex indexE)
@@ -1621,6 +1626,8 @@ void FileWidget::phoneRenameSlot(QModelIndex indexS, QModelIndex indexE)
             this->rightDisplay();
         }
     }
+    Q_UNUSED(tableView);
+    Q_UNUSED(sortModel);
 }
 
 void FileWidget::on_toolButtonFind_pressed()
@@ -2104,10 +2111,12 @@ void FileWidget::copySlotToComputer(QStringList list)
         return;
     }
 
-    if (this->dialog != NULL)
+    if (this->dialog != NULL){
         delete this->dialog;
+    }
         this->dialog = new dialogKopiuj(this, filesToCopy, this->sdk, dialogKopiuj::PhoneToComputer,
                                         this->phone->getPath(), this->computer->getPath());
+
 
     if (this->alwaysCloseCopy)
         this->dialog->closeAfterFinished();
@@ -2226,3 +2235,4 @@ void FileWidget::copySlotToPhoneLeft(QStringList list)
     connect(this->dialog,SIGNAL(finished(int)),this,SLOT(leftRefresh()));
     connect(this->dialog,SIGNAL(finished(int)),this,SLOT(rightRefresh()));
 }
+

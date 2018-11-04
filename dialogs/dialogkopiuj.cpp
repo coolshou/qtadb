@@ -176,6 +176,7 @@ void dialogKopiuj::nextFile(QString fileName, QString sourcePath, QString target
     this->ui->labelTo->setText(pathTo);
     this->ui->progressFile->setMaximum(fileSize);
     qDebug()<<"Copy,nextFile() - UI setted";
+    Q_UNUSED(counter);
 //    this->ui->progressBar_2->setValue(counter);
 //    emit this->progressValue(counter, this->ui->progressBar_2->maximum());
 

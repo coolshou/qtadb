@@ -333,6 +333,7 @@ void MainWindow::fillLanguages()
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
+    Q_UNUSED(e);
 //    if (ui->stackedWidget->currentWidget()==ui->pageFiles)
 //    {
 //        switch(e->key())
@@ -382,6 +383,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event);
 //    int width, height;
 //    if (event->button() == Qt::LeftButton)
 //    {
